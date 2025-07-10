@@ -21,14 +21,14 @@ class URLForm(FlaskForm):
             Optional(),
             Length(
                 max=SHORT_ID_MAX_LENGTH,
-                message=f'Максимальная длина идентификатора — {SHORT_ID_MAX_LENGTH} символов'
+                message='Максимальная длина идентификатора —'
+                        f'{SHORT_ID_MAX_LENGTH} символов'
             ),
             Regexp(
                 SHORT_ID_PATTERN,
-                message='Идентификатор может содержать только латинские буквы и цифры'
+                message='Идентификатор может содержать'
+                        'только латинские буквы и цифры'
             )
         ]
     )
     submit = SubmitField('Создать')
-
-

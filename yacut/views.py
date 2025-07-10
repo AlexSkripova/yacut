@@ -8,18 +8,18 @@ from yacut.services import URLMapService
 @app.route('/', methods=['GET', 'POST'])
 def index():
     """View-функция для главной страницы."""
-    
-    form = URLForm()
 
+    form = URLForm()
     short_link = None
-    
+
     if form.validate_on_submit():
         original_url = form.original_link.data
         custom_id = form.custom_id.data
-        
+
         try:
             url_map = URLMapService.create_url_map(original_url, custom_id)
-            short_link = url_for('redirect_to_original', short_id=url_map.short, _external=True)
+            short_link = url_for('redirect_to_original',
+                                 short_id=url_map.short, _external=True)
         except ValueError as e:
             flash(str(e), 'error')
 
