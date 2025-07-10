@@ -90,7 +90,7 @@ python-dotenv==1.0.0          # Переменные окружения
    ```
 
    Приложение будет доступно по адресу: http://localhost:5000
-   ``
+   ```
 ### Запуск тестов
 
 ```bash
@@ -152,5 +152,4 @@ http://localhost:5000/api
 
 ---
 
-**Автор:** AlexSkripova  
-**Репозиторий:** https://github.com/AlexSkripova/yacut
+**Автор:** Александра Скрипова
