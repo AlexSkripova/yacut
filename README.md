@@ -144,27 +144,6 @@ http://localhost:5000/api
 **Ошибки:**
 - `404` - Указанный id не найден
 
-### Примеры использования
-
-**Создание ссылки с автоматическим ID:**
-```bash
-curl -X POST http://localhost:5000/api/id/ \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://github.com/AlexSkripova/yacut"}'
-```
-
-**Создание ссылки с пользовательским ID:**
-```bash
-curl -X POST http://localhost:5000/api/id/ \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://github.com/AlexSkripova/yacut", "custom_id": "github"}'
-```
-
-**Получение оригинальной ссылки:**
-```bash
-curl http://localhost:5000/api/id/github/
-```
-
 ### Ограничения
 
 - **Максимальная длина custom_id:** 16 символов
