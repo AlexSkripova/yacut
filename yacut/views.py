@@ -22,6 +22,8 @@ def index():
                                  short_id=url_map.short, _external=True)
         except ValueError as e:
             flash(str(e), 'error')
+        except RuntimeError as e:
+            flash(str(e), 'error')
 
     return render_template('index.html', form=form, short_link=short_link)
 

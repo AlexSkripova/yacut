@@ -30,6 +30,8 @@ def create_short_link():
         }), 201
     except ValueError as e:
         return jsonify({'message': str(e)}), 400
+    except RuntimeError as e:
+        return jsonify({'message': str(e)}), 500
 
 
 @app.route('/api/id/<short_id>/', methods=['GET'])
