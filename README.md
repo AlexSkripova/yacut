@@ -38,54 +38,89 @@ cd scrapy_parser_pep
 pip install -r requirements.txt
 ```
 
-### 3. Запуск парсера
+4. **Настройка переменных окружения:**
+   
+   Создайте файл `.env` в корне проекта:
+   ```env
+   FLASK_APP=yacut
+   FLASK_ENV=development
+   SECRET_KEY=your-secret-key-here
+   DATABASE_URI=sqlite:///yacut.db
+   ```
+
+5. **Инициализация базы данных:**
+   ```bash
+   flask db upgrade
+   ```
+
+6. **Запуск приложения:**
+   ```bash
+   flask run
+   ```
+
+   Приложение будет доступно по адресу: http://localhost:5000
+   ```
+
+### Запуск тестов
+
 ```bash
-scrapy crawl pep
+pytest tests/ -v
 ```
 
-## Результаты работы
 
-После запуска в директории `results/` создаются два файла:
+##  API
 
-### 1. Список PEP (`pep_ДАТА-ВРЕМЯ.csv`)
-```csv
-number,name,status
-1,PEP Purpose and Guidelines,Active
-8,Style Guide for Python Code,Active
-20,The Zen of Python,Active
+### Базовый URL
+```
+http://localhost:5000/api
 ```
 
-### 2. Сводка по статусам (`status_summary_ДАТА-ВРЕМЯ.csv`)
-```csv
-Статус,Количество
-Final,285
-Active,55
-Draft,23
-Total,363
+### Эндпоинты
+
+#### POST /api/id/
+Создание короткой ссылки
+
+**Запрос:**
+```json
+{
+  "url": "https://example.com/very/long/url",
+  "custom_id": "short" // необязательный
+}
 ```
 
-## Архитектура
+**Ответ (201):**
+```json
+{
+  "url": "https://example.com/very/long/url",
+  "short_link": "http://localhost:5000/short"
+}
+```
 
-### Spider (`pep.py`)
-- `parse()` - собирает ссылки на все PEP документы с главной страницы
-- `parse_pep()` - извлекает данные из каждого документа (номер, название, статус)
+**Ошибки:**
+- `400` - Некорректные данные запроса
+- `400` - Короткая ссылка уже существует
 
-### Items (`items.py`)
-- `PepParseItem` - структура данных с полями: `number`, `name`, `status`
+#### GET /api/id/{short_id}/
+Получение оригинальной ссылки
 
-### Pipeline (`pipelines.py`)
-- `PepParsePipeline` - обрабатывает Items, подсчитывает статусы, создает сводку
+**Ответ (200):**
+```json
+{
+  "url": "https://example.com/very/long/url"
+}
+```
 
-### Настройки (`settings.py`)
-- Конфигурация Feeds для сохранения основного CSV
-- Настройки Pipeline для обработки данных
+**Ошибки:**
+- `404` - Указанный id не найден
 
-## Требования
+### Ограничения
 
-- Python 3.7+
-- Scrapy 2.5.1
-- pytest 6.2.5
-- Другие зависимости указаны в `requirements.txt`
+- **Максимальная длина custom_id:** 16 символов
+- **Допустимые символы:** латинские буквы (a-Z) и цифры (0-9)
+- **Автогенерируемый ID:** 6 случайных символов
+- **Уникальность:** каждый короткий ID может использоваться только один раз
 
+---
 
-### Автор: Александра Скрипова
+**Автор:** AlexSkripova  
+**Репозиторий:** https://github.com/AlexSkripova/yacut
