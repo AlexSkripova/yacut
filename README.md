@@ -14,7 +14,6 @@ yacut/
 │   ├── views.py               # Веб-контроллеры
 │   ├── api_views.py           # API эндпоинты
 │   ├── error_handlers.py      # Обработка ошибок
-│   ├── utils.py               # Вспомогательные функции
 │   ├── constants.py           # Константы приложения
 │   ├── settings.py            # Конфигурация
 │   ├── static/                # Статические файлы (CSS, JS, изображения)
